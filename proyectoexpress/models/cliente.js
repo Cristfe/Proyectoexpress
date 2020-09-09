@@ -1,11 +1,11 @@
 const conexion = require("../dbConfig")
 module.exports = {
-    insertar(nombre, categoría) {
+    insertar(nombre, direccion, valoración, cuenta) {
         return new Promise((resolve, reject) => {
-            conexion.query(`insert into seccion
-            (nombre, categoria)
+            conexion.query(`insert into clientes
+            (nombre,direccion, valoracion, cuenta)
             values
-            (?, ?)`, [nombre, categoria], (err, resultados) => {
+            (?, ?)`, [nombre, direccion, valoración, cuenta], (err, resultados) => {
                 if (err) reject(err);
                 else resolve(resultados.insertId);
             });
