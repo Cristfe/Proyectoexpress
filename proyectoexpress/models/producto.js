@@ -1,103 +1,84 @@
-const conexion = require("../dbConfig")
-const fs = require("fs");
-const path = require("path");
-module.exports = {
-    insertar(nombre, descripcion, año, categoria, precio) {
-        return new Promise((resolve, reject) => {
-            conexion.query(`insert into productos
-            (nombre, descripcion, año, categoría, precio)
-            values
-            (?, ?, ?, ?, ?)`, [nombre, descripcion, año, categoria, precio], (err, resultados) => {
-                if (err) reject(err);
-                else resolve(resultados.insertId);
-            });
-        });
-    },
-    agregarFoto(idProducto, nombreFoto) {
-        return new Promise((resolve, reject) => {
-            conexion.query(`insert into fotos_productos
-            (id_producto, foto)
-            values
-            (?, ?)`, [idProducto, nombreFoto], (err, resultados) => {
-                if (err) reject(err);
-                else resolve(resultados.insertId);
-            });
-        });
-    },
-    obtener() {
-        return new Promise((resolve, reject) => {
-            conexion.query(`select id, nombre, descripcion, año, categoría, precio from productos`,
-                (err, resultados) => {
-                    if (err) reject(err);
-                    else resolve(resultados);
-                });
-        });
-    },
-    obtenerConFotos() {
-        return new Promise((resolve, reject) => {
-            conexion.query(`select * from productos`,
-                async(err, resultados) => {
-                    if (err) reject(err);
-                    else {
-                        for (let x = 0; x < resultados.length; x++) {
-                            resultados[x].foto = await this.obtenerPrimeraFoto(resultados[x].id);
-                        }
-                        resolve(resultados);
-                    }
-                });
-        });
-    },
-    obtenerPrimeraFoto(idProducto) {
-        return new Promise((resolve, reject) => {
-            conexion.query(`select foto from fotos_productos WHERE id_producto = ? limit 1`, [idProducto],
-                (err, resultados) => {
-                    if (err) reject(err);
-                    else resolve(resultados[0].foto);
-                });
-        });
-    },
-    obtenerFotos(idProducto) {
-        return new Promise((resolve, reject) => {
-            conexion.query(`select id_producto, foto FROM fotos_productos WHERE id_producto = ?`, [idProducto],
-                (err, resultados) => {
-                    if (err) reject(err);
-                    else resolve(resultados);
-                });
-        });
-    },
-    obtenerPorId(id) {
-        return new Promise((resolve, reject) => {
-            conexion.query(`select id, nombre,descripcion, precio from productos where id = ?`, [id],
-                (err, resultados) => {
-                    if (err) reject(err);
-                    else resolve(resultados[0]);
-                });
-        });
-    },
-    actualizar(id, nombre, precio) {
-        return new Promise((resolve, reject) => {
-            conexion.query(`update productos
-            set nombre = ?,
-            precio = ?
-            where id = ?`, [nombre, precio, id],
-                (err) => {
-                    if (err) reject(err);
-                    else resolve();
-                });
-        });
-    },
-    eliminar(id) {
-        return new Promise(async(resolve, reject) => {
-            const fotos = await this.obtenerFotos(id);
-            for (let m = 0; m < fotos.length; m++) {
-                await fs.unlinkSync(path.join(__dirname, "fotos_productos", fotos[m].foto));
+const dbConfig = require("../dbConfig")
+
+const getAllCb = (callback) => {
+    db.query('SELECT * FROM productos', callback);
+}
+
+const getAll = () => {
+    return new Promise((resolve, reject) => {
+        db.query('SELECT * FROM productos', (err, rows) => {
+            if (err) {
+                reject(err);
             }
-            conexion.query(`delete from productos
-            where id = ?`, [id],
-                (err) => {
-                    if (err) reject(err);
-                    else resolve();
-                });
+            resolve(rows);
         });
-    },
+    });
+}
+
+const getAllV2 = async() => {
+    const rows = await executeQuery('select * from productos where id = ?', [4]);
+    return rows;
+}
+
+const create = ({ nombre, descripcion, categoria, fecha_alta, imagen, precio, seccion }) => {
+    const valores = [nombre, descripcion, categoria, fecha_alta, imagen, precio, seccion];
+
+    return new Promise((resolve, reject) => {
+        db.query('insert into productos (nombre, descripcion, categoria, fecha_alta, imagen, precio, seccion) values (?, ?, ?, ?, ?, ?, ?, ?)', valores, (err, result) => {
+            if (err) {
+                reject(err);
+            }
+            resolve(result);
+        });
+    });
+}
+
+
+
+const getById = (pProductoId) => {
+    return new Promise((resolve, reject) => {
+        db.query('select * from productos where id = ?', [pProductoId], (err, rows) => {
+            if (err) reject(err);
+            if (rows.length !== 1) resolve(null);
+            resolve(rows[0]);
+        });
+    });
+}
+
+const update = ({ nombre, descripcion, categoria, fecha_alta, imagen, precio, seccion }) => {
+    return new Promise((resolve, reject) => {
+        db.query('UPDATE productos SET nombre = ?, descripcion = ?, categoria = ?, fecha_alta = ?, imagen = ?, precio = ?, seccion = ? WHERE id = ?', [nombre, descripcion, categoria, fecha_alta, imagen, precio, seccion], (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        });
+    });
+}
+
+
+const remove = (pProductoId) => {
+    return new Promise((resolve, reject) => {
+        db.query('delete from productos where id = ?', [pProductoId], (err, result) => {
+            if (err) reject(err);
+            resolve(result);
+        });
+    });
+}
+
+
+const executeQuery = (query, values = []) => {
+    return new Promise((resolve, reject) => {
+        db.query(query, values, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        })
+    });
+}
+
+module.exports = {
+    getAllCb,
+    getAll,
+    create,
+    getById,
+    update,
+    remove
 }

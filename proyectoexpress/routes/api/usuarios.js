@@ -17,7 +17,6 @@ router.post('/registro', [
         return res.json(errors.array());
     }
 
-    // encriptamos la password
     req.body.password = bcrypt.hashSync(req.body.password, 10);
 
     await create(req.body);
@@ -28,14 +27,14 @@ router.post('/login', [
     check('email', 'El email es obligatorio').exists().notEmpty(),
     check('password', 'El campo password es obligatorio').exists().notEmpty()
 ], async(req, res) => {
-    // Validación errores datos de entrada
+
     const errors = validationResult(req);
     if (!errors.isEmpty()) return res.json(errors.array());
 
     const usuario = await getByEmail(req.body.email);
 
     if (usuario) {
-        // El email existe en la BD
+
         const iguales = bcrypt.compareSync(req.body.password, usuario.password);
         if (iguales) {
             res.json({ success: 'login!', token: createToken(usuario) });
@@ -43,12 +42,12 @@ router.post('/login', [
             res.json({ error: 'El email/password son incorrectos' });
         }
     } else {
-        // El email no existe en la BD
+
         res.json({ error: 'El email/password son incorrectos 1' });
     }
 });
 
-// HELPERS
+
 const createToken = (pUser) => {
     const payload = {
         userId: pUser.id,
