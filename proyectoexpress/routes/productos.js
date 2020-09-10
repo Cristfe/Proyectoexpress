@@ -8,7 +8,7 @@ router.get('/', async(req, res) => {
     try {
         const rows = await getAll();
         rows.forEach(row => {
-            row.fecha_inc = moment(row.fecha_inc).format('DD-MM-YYYY');
+            row.fecha_alta = moment(row.fecha_alta).format('DD-MM-YYYY');
         })
         res.render('productos/index', {
             productos: rows
@@ -23,9 +23,9 @@ router.get('/new', (req, res) => {
 });
 
 
-router.get('/:departamentoId', async(req, res) => {
+router.get('/:seccionId', async(req, res) => {
     try {
-        const producto = await getById(req.params.departamentoId);
+        const producto = await getById(req.params.seccionId);
         res.render('productos/detail', { producto });
     } catch (error) {
         console.log(error);
@@ -34,7 +34,7 @@ router.get('/:departamentoId', async(req, res) => {
 
 router.post('/create', async(req, res) => {
 
-    req.body.fecha_inc = new Date();
+    req.body.fecha_alta = new Date();
     const result = await create(req.body);
 
     res.redirect('/productos');

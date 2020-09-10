@@ -5,10 +5,10 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 
-const clientesRouter = require('./routes/clientes');
+
 const productosRouter = require('./routes/productos');
 const seccionesRouter = require('./routes/secciones');
-const usuariosRouter = require('./routes/usuarios');
+
 const apiRouter = require('./routes/api');
 
 require('dotenv').config();
@@ -21,17 +21,16 @@ require('./dbConfig').connect();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/clientes', clientesRouter);
+
 app.use('/productos', productosRouter);
 app.use('/secciones', seccionesRouter);
-app.use('/usuarios', usuariosRouter);
 app.use('/api', apiRouter);
 
 

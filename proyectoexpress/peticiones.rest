@@ -1,5 +1,5 @@
 GET http://localhost:3000/api/productos 
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImNyZWF0ZWRBdCI6MTU5OTQ5ODU4MiwiZXhwaXJlZEF0IjoxNTk5NDk5NDgyLCJpYXQiOjE1OTk0OTg1ODJ9.0t4_6f3XFMXf865RRLnybclotgo1cHg_Bnz6B6YmtSw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImNyZWF0ZWRBdCI6MTU5OTc0NDIwNywiZXhwaXJlZEF0IjoxNTk5NzQ1MTA3LCJpYXQiOjE1OTk3NDQyMDd9.eRDb0b-trWPte3SIe_ZoVK4WWI6977_kPHquN8f03lM
 
 ###
 
@@ -26,7 +26,7 @@ POST http://localhost:3000/api/usuarios/registro
 Content-Type: application/json
 
 {
-    "username": "cherrera", "email": "cristianhm@neolandmail.com", "password": "12345"
+    "username": "cherrera", "email": "cristian@neoland.com", "password": "456"
 
 }
 
@@ -35,6 +35,6 @@ POST http://localhost:3000/api/usuarios/login
 Content-Type: application/json
 
 {
-    "email": "cristian_hm@neolandmail.com", "password": "12345"
+    "email": "cristian@neoland.com", "password": "456"
 
 }
