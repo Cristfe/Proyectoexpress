@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const moment = require('moment');
 
-const { getAll, create, getById, update, remove } = require('../models/producto');
+const Producto = require('../models/Producto')
 
 
 router.get('/', async(req, res) => {
@@ -18,6 +18,7 @@ router.get('/', async(req, res) => {
     }
 });
 
+
 router.get('/new', (req, res) => {
     res.render('productos/formulario');
 });
@@ -31,6 +32,15 @@ router.get('/:seccionId', async(req, res) => {
         console.log(error);
     }
 });
+
+router.get('/descripcion/:id', async(req, res) => {
+    try {
+        const viewer = await Producto.getByIdDescription(req.params.id);
+        res.json(viewer);
+    } catch (err) {
+        res.send(err);
+    }
+})
 
 router.post('/create', async(req, res) => {
 
