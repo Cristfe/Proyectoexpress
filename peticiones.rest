@@ -1,0 +1,40 @@
+GET http://localhost:3000/productos 
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNyZWF0ZWRBdCI6MTYwMDQ0MTYzMjU0MCwiZXhwaXJlZEF0Ijo4MDAyMjQ0MTYsImlhdCI6MTYwMDQ0MTYzMn0.SV2haZEjU3AjRz0ojXpO0i46UiR76tqd06FBGmcxdkY
+
+###
+
+POST http://localhost:3000/productos 
+Content-Type: application/json
+
+###
+
+DELETE http://localhost:3000/productos 
+Content-Type: application/json
+
+###
+
+PUT http://localhost:3000/productos 
+Content-Type: application/json
+
+### secciones ####
+GET http://localhost:3000/secciones
+
+
+### USUARIOS
+
+POST http://localhost:3000/usuarios/registro 
+Content-Type: application/json
+
+{
+    "username": "cherrera", "email": "cristian@neoland.com", "password": "456"
+
+}
+
+### 
+POST http://localhost:3000/usuarios/login 
+Content-Type: application/json
+
+{
+    "email": "cristian@neoland.com", "password": "456"
+
+}
