@@ -4,7 +4,7 @@ const getAllCb = (callback) => {
     db.query('SELECT * FROM productos', callback);
 }
 
-const getAllProductos = () => {
+const getAll = () => {
     return new Promise((resolve, reject) => {
         db.query('SELECT * FROM productos', (err, rows) => {
             if (err)
@@ -14,16 +14,12 @@ const getAllProductos = () => {
     });
 }
 
-const getAllV2 = async() => {
-    const rows = await executeQuery('select * from productos where id = ?', [4]);
-    return rows;
-}
 
-const create = ({ nombre, descripcion, categoria, fecha_alta, imagen, precio, seccion }) => {
-    const valores = [nombre, descripcion, categoria, fecha_alta, imagen, precio, seccion];
+const create = ({ nombre, descripcion, fecha_alta, imagen, precio, fk_seccion }) => {
+    const valores = [nombre, descripcion, fecha_alta, imagen, precio, fk_seccion];
 
     return new Promise((resolve, reject) => {
-        db.query('insert into productos (nombre, descripcion, categoria, fecha_alta, imagen, precio, seccion) values (?, ?, ?, ?, ?, ?, ?, ?)', valores, (err, result) => {
+        db.query('insert into productos (nombre, descripcion, fecha_alta, imagen, precio) values (?, ?, ?, ?, ?)', valores, (err, result) => {
             if (err) {
                 reject(err);
             }
@@ -44,9 +40,9 @@ const getById = (pProductoId) => {
     });
 }
 
-const update = ({ nombre, descripcion, categoria, fecha_alta, imagen, precio, seccion }) => {
+const update = ({ nombre, descripcion, fecha_alta, imagen, precio }) => {
     return new Promise((resolve, reject) => {
-        db.query('UPDATE productos SET nombre = ?, descripcion = ?, categoria = ?, fecha_alta = ?, imagen = ?, precio = ?, seccion = ? WHERE id = ?', [nombre, descripcion, categoria, fecha_alta, imagen, precio, seccion], (err, result) => {
+        db.query('UPDATE productos SET nombre = ?, descripcion = ?, fecha_alta = ?, imagen = ?, precio = ? WHERE id = ?', [nombre, descripcion, fecha_alta, imagen, precio], (err, result) => {
             if (err) return reject(err);
             resolve(result);
         });
@@ -75,9 +71,10 @@ const executeQuery = (query, values = []) => {
 
 module.exports = {
     getAllCb,
-    getAllProductos,
+    getAll,
     create,
     getById,
     update,
-    remove
+    remove,
+    executeQuery
 }

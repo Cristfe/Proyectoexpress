@@ -6,20 +6,9 @@ const Usuario = require('../models/Usuario');
 
 //Registro
 router.post('/registro', async(req, res) => {
-    const email = await Usuario.getByEmail(req.body.email);
-    const user = await Usuario.getByUser(req.body.usuario);
-    console.log(req.body.usuario);
-
-    if (email) {
-        res.json({ error: 'El email ya está registrado' })
-    } else if (user) {
-        res.json({ error: 'El usuario ya está registrado' })
-    } else {
-
-        req.body.password = bcrypt.hashSync(req.body.password, 10);
-        result = await Usuario.create(req.body);
-        result['affectedRows'] === 1 ? res.json({ success: 'Registro correcto' }) : res.json({ error: 'Error en el registro' });
-    }
+    req.body.password = bcrypt.hashSync(req.body.password, 10);
+    const result = await Usuario.create(req.body);
+    result['affectedRows'] === 1 ? res.json({ success: 'Registro correcto' }) : res.json({ error: 'Error en el registro' });
 });
 
 //Login

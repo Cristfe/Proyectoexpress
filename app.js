@@ -1,19 +1,18 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+var createError = require('http-errors');
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
 const cors = require('cors');
 
 const indexRouter = require('./routes/index');
-const indiceRouter = require('./routes/indices');
 const usuariosRouter = require('./routes/usuarios')
 const productosRouter = require('./routes/productos');
 const seccionesRouter = require('./routes/secciones');
 
 require('dotenv').config();
 
-const app = express();
+var app = express();
 
 require('./dbConfig').connect();
 
@@ -32,7 +31,6 @@ app.use('/', indexRouter);
 app.use('/usuarios', usuariosRouter);
 app.use('/productos', productosRouter);
 app.use('/secciones', seccionesRouter);
-app.use('/indices', indiceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

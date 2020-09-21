@@ -12,6 +12,16 @@ const create = ({ username, email, password }) => {
     });
 };
 
+const getByUser = (pUsuario) => {
+    return new Promise((resolve, reject) => {
+        db.query('select * from usuarios where usuario=?', [pUsuario], (err, rows) => {
+            if (err) reject(err);
+            if (rows.length !== 1) resolve(null);
+            resolve(rows[0]);
+        });
+    });
+};
+
 const getByEmail = (pEmail) => {
     return new Promise((resolve, reject) => {
         db.query('select * from usuarios where email = ?', [pEmail], (err, rows) => {
@@ -35,5 +45,6 @@ const getById = (pUsuarioId) => {
 module.exports = {
     create,
     getByEmail,
-    getById
+    getById,
+    getByUser
 }

@@ -1,32 +1,37 @@
 GET http://localhost:3000/productos 
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNyZWF0ZWRBdCI6MTYwMDQ0MTYzMjU0MCwiZXhwaXJlZEF0Ijo4MDAyMjQ0MTYsImlhdCI6MTYwMDQ0MTYzMn0.SV2haZEjU3AjRz0ojXpO0i46UiR76tqd06FBGmcxdkY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNyZWF0ZWRBdCI6MTYwMDY3NjcyOTAzNiwiZXhwaXJlZEF0Ijo4MDAzNDE5NjQsImlhdCI6MTYwMDY3NjcyOX0.v_n-Mvt12m1yKwk7mZnCEdWoJwzUo1eP4YQ3Es_OBgU
 
 ###
 
-POST http://localhost:3000/productos 
+POST http://localhost:3000/productos
 Content-Type: application/json
+
+{
+    "nombre": "Camara",
+    "descripcion": "Camara fotos años 1980",
+    "imagen": null,
+    "precio": 409.99,
+}
+
 
 ###
 
-DELETE http://localhost:3000/productos 
+DELETE http://localhost:3000/delete/ 
 Content-Type: application/json
-
-###
-
-PUT http://localhost:3000/productos 
-Content-Type: application/json
+{
+    "id": 1
+}
 
 ### secciones ####
 GET http://localhost:3000/secciones
 
 
 ### USUARIOS
-
 POST http://localhost:3000/usuarios/registro 
 Content-Type: application/json
 
 {
-    "username": "cherrera", "email": "cristian@neoland.com", "password": "456"
+    "username": "morales", "email": "cristianmorales@neoland.com", "password": "789"
 
 }
 

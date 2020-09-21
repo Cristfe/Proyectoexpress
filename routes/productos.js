@@ -5,7 +5,7 @@ const Producto = require('../models/Producto')
 
 
 router.get('/', (req, res) => {
-    Producto.getAllProductos()
+    Producto.getAll()
         .then((rows) => {
             res.json(rows);
         }).catch((err) => {
@@ -27,55 +27,46 @@ router.get('/', (req, res) => {
 //     }
 // });
 
-
-// router.get('/new', (req, res) => {
-//     res.render('productos/formulario');
-// });
-
-
-// router.get('/:seccionId', async(req, res) => {
+// router.post('/', async(req, res) => {
 //     try {
-//         const producto = await getById(req.params.seccionId);
-//         res.render('productos/detail', { producto });
+//         req.body.fecha_alta = new Date();
+//         const result = await Producto.create(req.body);
+//         if (result['affectedRows'] === 1) {
+//             const nuevoProducto = await getById(result['insertId']);
+//             res.status(201).json({ success: 'Se ha insertado un nuevo producto', producto: nuevoProducto });
+//         } else {
+//             res.status(422).json({ error: 'No se ha podido insertar el producto' });
+//         }
 //     } catch (error) {
-//         console.log(error);
+//         res.status(500).json({ error: error.message });
 //     }
 // });
 
-// router.get('/descripcion/:id', async(req, res) => {
+
+// router.put('/', async(req, res) => {
 //     try {
-//         const viewer = await Producto.getByIdDescription(req.params.id);
-//         res.json(viewer);
-//     } catch (err) {
-//         res.send(err);
+//         const result = await Producto.update(req.body);
+//         if (result['affectedRows'] === 1) {
+//             res.json({ success: 'Se ha editado el producto' });
+//         } else {
+//             res.status(422).json({ error: 'No se ha podido actualizar' });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
 //     }
-// })
-
-// router.post('/create', async(req, res) => {
-
-//     req.body.fecha_alta = new Date();
-//     const result = await create(req.body);
-
-//     res.redirect('/productos');
 // });
 
-
-// router.get('/edit/:productoId', async(req, res) => {
-//     const producto = await getById(req.params.productoId);
-//     res.render('productos/update', { producto });
-// });
-
-// router.post('/update', async(req, res) => {
-//     const result = await update(req.body);
-//     console.log(result);
-//     res.redirect(`/productos/${req.body.id}`);
-// });
-
-// router.get('/delete/:productoId', (req, res) => {
-//     remove(req.params.productoId)
-//         .then(result => {
-//             res.redirect('/productos');
-//         }).catch(error => console.log(error));
+// router.delete('/', async(req, res) => {
+//     try {
+//         const result = await Producto.remove(req.body.id);
+//         if (result['affectedRows'] === 1) {
+//             res.json({ success: 'Se ha borrado el producto' });
+//         } else {
+//             res.status(422).json({ error: 'No se ha borrado el producto. Comprueba el ID' });
+//         }
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
 // });
 
 module.exports = router;
