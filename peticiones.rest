@@ -1,5 +1,5 @@
 GET http://localhost:3000/productos 
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNyZWF0ZWRBdCI6MTYwMDY3NjcyOTAzNiwiZXhwaXJlZEF0Ijo4MDAzNDE5NjQsImlhdCI6MTYwMDY3NjcyOX0.v_n-Mvt12m1yKwk7mZnCEdWoJwzUo1eP4YQ3Es_OBgU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImNyZWF0ZWRBdCI6MTYwMDY4MjMzNDgyNCwiZXhwaXJlZEF0Ijo4MDAzNDQ3NjcsImlhdCI6MTYwMDY4MjMzNH0.0lA7SQge-YTwUmYKQWunjDn5rLsiG0bGyyWqrSQtCBI
 
 ###
 
@@ -10,7 +10,6 @@ Content-Type: application/json
     "nombre": "Camara",
     "descripcion": "Camara fotos años 1980",
     "imagen": null,
-    "precio": 409.99,
 }
 
 
